@@ -44,6 +44,8 @@ set_copy_mode_bindings() {
     copy_command_mouse="$(clipboard_copy_command "true")"
     if tmux_is_at_least 2.4; then
         tmux bind-key -T copy-mode-vi "$(yank_key)" send-keys -X "$(yank_action)" "$copy_command"
+        tmux bind-key -T copy-mode-vi "Enter" send-keys -X copy-pipe-and-cancel "$copy_command"
+        tmux bind-key -T copy-mode-vi "C-j" send-keys -X copy-pipe-and-cancel "$copy_command"
         tmux bind-key -T copy-mode-vi "$(put_key)" send-keys -X copy-pipe-and-cancel "tmux paste-buffer"
         tmux bind-key -T copy-mode-vi "$(yank_put_key)" send-keys -X copy-pipe-and-cancel "$copy_command; tmux paste-buffer"
         tmux bind-key -T copy-mode-vi "$(yank_wo_newline_key)" send-keys -X "$(yank_action)" "$copy_wo_newline_command"
@@ -52,6 +54,9 @@ set_copy_mode_bindings() {
         fi
 
         tmux bind-key -T copy-mode "$(yank_key)" send-keys -X "$(yank_action)" "$copy_command"
+        tmux bind-key -T copy-mode "Enter" send-keys -X copy-pipe-and-cancel "$copy_command"
+        tmux bind-key -T copy-mode "C-w" send-keys -X copy-pipe-and-cancel "$copy_command"
+        tmux bind-key -T copy-mode "M-w" send-keys -X copy-pipe-and-cancel "$copy_command"
         tmux bind-key -T copy-mode "$(put_key)" send-keys -X copy-pipe-and-cancel "tmux paste-buffer"
         tmux bind-key -T copy-mode "$(yank_put_key)" send-keys -X copy-pipe-and-cancel "$copy_command; tmux paste-buffer"
         tmux bind-key -T copy-mode "$(yank_wo_newline_key)" send-keys -X "$(yank_action)" "$copy_wo_newline_command"
